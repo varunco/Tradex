@@ -15,140 +15,214 @@ const PORT = 3002;
 app.use(cors());
 app.use(express.json());
 
+/* ================= DATABASE ================= */
+
 mongoose.connect(process.env.MONGO_URL)
 .then(()=>{
 
   console.log("DB connected");
 
   app.listen(PORT,()=>{
-    console.log("Server running on port "+PORT);
+    console.log("Server running on port " + PORT);
   });
 
 })
 .catch(err=>console.log(err));
 
 
-/* USER HOLDINGS */
+/* ================= USER HOLDINGS ================= */
 
 app.get("/allHoldings/:userId", async (req,res)=>{
 
-  const holdings = await HoldingsModel.find({
-    userId:req.params.userId
-  });
+  try{
 
-  res.json(holdings);
+    const holdings = await HoldingsModel.find({
+      userId:req.params.userId
+    });
+
+    res.json(holdings);
+
+  }catch(err){
+    res.status(500).json({message:"Error fetching holdings"});
+  }
 
 });
 
 
-/* USER ORDERS */
+/* ================= USER ORDERS ================= */
 
 app.get("/allOrders/:userId", async (req,res)=>{
 
-  const orders = await OrdersModel.find({
-    userId:req.params.userId
-  });
+  try{
 
-  res.json(orders);
+    const orders = await OrdersModel.find({
+      userId:req.params.userId
+    });
+
+    res.json(orders);
+
+  }catch(err){
+    res.status(500).json({message:"Error fetching orders"});
+  }
 
 });
 
 
-/* USER POSITIONS */
+/* ================= USER POSITIONS ================= */
 
 app.get("/allPositions/:userId", async (req,res)=>{
 
-  const positions = await PositionsModel.find({
-    userId:req.params.userId
-  });
+  try{
 
-  res.json(positions);
+    const positions = await PositionsModel.find({
+      userId:req.params.userId
+    });
+
+    res.json(positions);
+
+  }catch(err){
+    res.status(500).json({message:"Error fetching positions"});
+  }
 
 });
 
 
-/* NEW ORDER */
+/* ================= CREATE NEW ORDER ================= */
 
 app.post("/newOrder", async (req,res)=>{
+console.log("Incoming Order:", req.body);
 
-  const newOrder = new OrdersModel({
+  try{
 
-    userId:req.body.userId,
-    name:req.body.name,
-    qty:req.body.qty,
-    price:req.body.price,
-    mode:req.body.mode
+    const {userId,name,qty,price,mode} = req.body;
 
-  });
+    if(!userId){
+      return res.status(400).json({
+        message:"UserId required"
+      });
+    }
 
-  await newOrder.save();
+    const newOrder = new OrdersModel({
 
-  res.json("Order saved");
+      userId:userId,
+      name:name,
+      qty:qty,
+      price:price,
+      mode:mode
 
-});
+    });
 
+    await newOrder.save();
 
-/* SIGNUP */
+    res.json({
+      message:"Order saved successfully"
+    });
+
+  }catch(err){
+
+    console.log(err);
+
+    res.status(500).json({
+      message:"Error saving order"
+    });
+
+  }
+
+});/* ================= SIGNUP ================= */
 
 app.post("/signup", async (req,res)=>{
 
-  const {username,email,password} = req.body;
+  try{
 
-  const existingUser = await UserModel.findOne({
-    $or:[{email},{username}]
-  });
+    const {username,email,password} = req.body;
 
-  if(existingUser){
+    const existingUser = await UserModel.findOne({
+      $or:[{email},{username}]
+    });
 
-    return res.status(400).json({
-      message:"User already exists"
+    if(existingUser){
+
+      return res.status(400).json({
+        message:"User already exists"
+      });
+
+    }
+
+    const user = new UserModel({
+      username,
+      email,
+      password
+    });
+
+    await user.save();
+
+    res.json({
+
+      message:"Signup successful",
+      username:user.username,
+      userId:user._id
+
+    });
+
+  }catch(err){
+
+    res.status(500).json({
+      message:"Signup error"
     });
 
   }
-
-  const user = new UserModel({
-    username,
-    email,
-    password
-  });
-
-  await user.save();
-
-  res.json({
-
-    message:"Signup successful",
-    username:user.username,
-    userId:user._id
-
-  });
 
 });
 
 
-/* LOGIN */
+/* ================= LOGIN ================= */
 
 app.post("/login", async (req,res)=>{
 
-  const {email,password} = req.body;
+  try{
 
-  const user = await UserModel.findOne({
-    email,
-    password
-  });
+    const {email,password} = req.body;
 
-  if(!user){
+    const user = await UserModel.findOne({
+      email,
+      password
+    });
 
-    return res.status(401).json({
-      message:"Invalid credentials"
+    if(!user){
+
+      return res.status(401).json({
+        message:"Invalid credentials"
+      });
+
+    }
+
+    res.json({
+
+      message:"Login success",
+      username:user.username,
+      userId:user._id
+
+    });
+
+  }catch(err){
+
+    res.status(500).json({
+      message:"Login error"
     });
 
   }
 
+});
+
+
+/* ================= DEMO USER ================= */
+
+app.get("/demoUser", (req,res)=>{
+
   res.json({
 
-    message:"Login success",
-    username:user.username,
-    userId:user._id
+    username:"Guest",
+    userId:"demo-user"
 
   });
 

@@ -14,16 +14,22 @@ import { GeneralContextProvider } from "./GeneralContext";
 
 const params = new URLSearchParams(window.location.search);
 
-const userId = params.get("userId");
-const username = params.get("username");
+const urlUserId = params.get("userId");
+const urlUsername = params.get("username");
 
-if(userId){
-  localStorage.setItem("userId",userId);
+/* store user from URL */
+if (urlUserId) {
+  localStorage.setItem("userId", urlUserId);
 }
 
-if(username){
-  localStorage.setItem("username",username);
+if (urlUsername) {
+  localStorage.setItem("username", urlUsername);
 }
+
+/* fallback if page refresh happens */
+const userId = localStorage.getItem("userId");
+const username = localStorage.getItem("username");
+
 
 const Dashboard = () => {
   return (

@@ -28,7 +28,7 @@ function Hero() {
         {/* Image Section */}
         <div className="col-md-6 text-center">
           <img
-            src="media/about.png"
+            src="media/About me-cuate.svg"
             alt="About"
             style={{ width: "80%" }}
           />

@@ -8,6 +8,7 @@ import {
   Tooltip,
   Legend,
 } from "chart.js";
+
 import { Bar } from "react-chartjs-2";
 
 ChartJS.register(
@@ -32,6 +33,20 @@ export const options = {
   },
 };
 
-export function VerticalGraph({ data }) {
+export function VerticalGraph({ allHoldings }) {
+
+  const labels = allHoldings.map((stock) => stock.name);
+
+  const data = {
+    labels,
+    datasets: [
+      {
+        label: "Stock Price",
+        data: allHoldings.map((stock) => stock.price),
+        backgroundColor: "rgba(255, 99, 132, 0.5)",
+      },
+    ],
+  };
+
   return <Bar options={options} data={data} />;
 }

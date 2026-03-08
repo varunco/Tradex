@@ -37,29 +37,65 @@ alert("Invalid email or password");
 
 return(
 
-<div>
+<div className="container d-flex justify-content-center align-items-center vh-100">
 
-<h2>Login</h2>
+<div className="card shadow-lg p-4" style={{width:"400px"}}>
+
+<h3 className="text-center mb-4">Login</h3>
 
 <form onSubmit={handleLogin}>
 
+<div className="mb-3">
+
+<label className="form-label">Email</label>
+
 <input
 type="email"
-placeholder="email"
+className="form-control"
+placeholder="Enter your email"
 onChange={(e)=>setEmail(e.target.value)}
+required
 />
+
+</div>
+
+<div className="mb-3">
+
+<label className="form-label">Password</label>
 
 <input
 type="password"
-placeholder="password"
+className="form-control"
+placeholder="Enter your password"
 onChange={(e)=>setPassword(e.target.value)}
+required
 />
 
-<button type="submit">
+</div>
+
+<button type="submit" className="btn btn-primary w-100">
 Login
+</button>
+<button
+className="btn btn-secondary w-100 mt-3"
+onClick={()=>{
+
+  localStorage.clear();
+
+  localStorage.setItem("userId","demo-user");
+  localStorage.setItem("username","Guest");
+
+  window.location.href =
+  "http://localhost:3001/?userId=demo-user&username=Guest";
+
+}}
+>
+Try Demo
 </button>
 
 </form>
+
+</div>
 
 </div>
 

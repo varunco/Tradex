@@ -11,7 +11,7 @@ function Navbar() {
 
         <Link className="navbar-brand" to="/">
           <img
-            src="media/logo.svg"
+            src="./media/logo.png"
             style={{ width: "120px" }}
             alt="Logo"
           />

@@ -12,33 +12,41 @@ const BuyActionWindow = ({ uid }) => {
 
   const handleBuyClick = async () => {
 
-    const userId = localStorage.getItem("userId");
+  const userId = localStorage.getItem("userId");
 
-    if (!stockQuantity || !stockPrice) {
-      alert("Enter quantity and price");
-      return;
-    }
+  if (!userId) {
+    alert("User not logged in");
+    return;
+  }
 
-    try {
+  try {
 
-      await axios.post("http://localhost:3002/newOrder", {
+    const res = await axios.post("http://localhost:3002/newOrder", {
+      userId: userId,
+      name: uid,
+      qty: Number(stockQuantity),
+      price: Number(stockPrice),
+      mode: "BUY"
+    });
 
-        userId,
-        name: uid,
-        qty: parseInt(stockQuantity),
-        price: parseFloat(stockPrice),
-        mode: "BUY"
+    console.log("Order sent:", {
+      userId,
+      name: uid,
+      qty: stockQuantity,
+      price: stockPrice
+    });
 
-      });
+    alert("Order placed successfully");
 
-      closeBuyWindow();
+    closeBuyWindow();
+    window.location.reload();
 
-    } catch (err) {
-      console.log(err);
-    }
+  } catch (err) {
+    console.error(err);
+    alert("Error placing order");
+  }
 
-  };
-
+};
   return (
     <div className="buy-window">
 

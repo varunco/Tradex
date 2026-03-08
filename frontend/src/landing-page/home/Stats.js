@@ -41,7 +41,7 @@ function Stats() {
         <div className="col-md-6 text-center">
 
           <img
-            src="media/ecoSystem.png"
+            src="media/Conversation-cuate.svg"
             alt="Ecosystem"
             className="img-fluid mb-4"
             style={{ maxWidth: "75%" }}
