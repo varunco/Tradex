@@ -1,48 +1,64 @@
-import React from 'react';
+import React from "react";
 
 function Awards() {
-    return ( 
-        <div className='container'>
-            <div className='row'>
-                <div className='col-lg-6 col-sm-12 p-5'>
-                    <img src='media/Awards-cuate.svg' style={{height:"80%"}}></img>
-                </div>
-                <div className='col-lg-6 col-sm-12 p-5 '>
-                    <h1>Largest stock broker in India</h1>
-                    <p className='mb-5'>1.5+ Crore Zerodha clients contribute to over 15% of all retail order volumes in India daily by trading and investing in: </p>
-                    <div className='row'>
-                        <div className='col-6'>
-                            <ul>
-                                <li>
-                                    <p>Futures and Options</p>
-                                </li>
-                                <li>
-                                    <p>Commodity derivatives</p>
-                                </li>
-                                <li>
-                                    <p>Currency derivatives</p>
-                                </li>
-                            </ul>
-                        </div>
-                        <div className='col-6'>
-                            <ul>
-                                <li>
-                                    <p>Stocks & IPOs</p>
-                                </li>
-                                <li>
-                                    <p>Direct mutual funds</p>
-                                </li>
-                                <li>
-                                    <p>Bonds and Govt. Securities</p>
-                                </li>
-                            </ul>
-                        </div>
-                        <img src='media/pressLogos.png' style={{width:"95%"}}></img>
-                    </div>
-                </div>
-            </div>
+  return (
+    <div className="container">
+      <div className="row">
+        
+        <div className="col-lg-6 col-sm-12 p-5">
+          <img 
+            src="media/Awards-cuate.svg" 
+            style={{ height: "80%" }} 
+            alt="SB Stocks platform illustration"
+          />
         </div>
-     );
+
+        <div className="col-lg-6 col-sm-12 p-5">
+          <h1>Smart trading with SB-Stocks</h1>
+
+          <p className="mb-5">
+            SB-Stocks is a modern trading platform built to simplify investing.
+            It provides powerful tools, a clean interface, and real-time market
+            insights to help traders make better decisions and manage their
+            portfolios efficiently.
+          </p>
+
+          <div className="row">
+            <div className="col-6">
+              <ul>
+                <li>
+                  <p>Real-time stock market tracking</p>
+                </li>
+                <li>
+                  <p>Interactive trading dashboard</p>
+                </li>
+                <li>
+                  <p>Portfolio management tools</p>
+                </li>
+              </ul>
+            </div>
+
+            <div className="col-6">
+              <ul>
+                <li>
+                  <p>Secure order placement</p>
+                </li>
+                <li>
+                  <p>Market insights and analytics</p>
+                </li>
+                <li>
+                  <p>Simple and user-friendly interface</p>
+                </li>
+              </ul>
+            </div>
+
+            
+          </div>
+        </div>
+
+      </div>
+    </div>
+  );
 }
 
 export default Awards;
